@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #070c18;
+  --surface: #0d1525;
+  --surface2: #121e35;
+  --surface3: #192840;
+  --border: #243352;
+  --border-light: #334d72;
+
+  --gold: #c9a84c;
+  --gold-light: #e5c96a;
+  --gold-dim: #7a6030;
+
+  --text: #d5e6f5;
+  --text-muted: #7a93b5;
+  --text-dim: #48607f;
+
+  --green: #27ae60;
+  --green-light: #2ecc71;
+  --red: #c0392b;
+  --red-light: #e74c3c;
+  --yellow: #d4ac0d;
+  --yellow-light: #f1c40f;
+  --blue: #2471a3;
+  --blue-light: #3498db;
+
+  --radius: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.7);
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { min-height: 100%; display: flex; flex-direction: column; }
+
+h1, h2, h3 { font-family: 'Cinzel', Georgia, serif; letter-spacing: 0.04em; }
+
+a { color: var(--gold-light); text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-light); }

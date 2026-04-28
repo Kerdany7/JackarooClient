@@ -1,0 +1,190 @@
+.page {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2.2rem 2rem 1.8rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.suits {
+  font-size: 1.3rem;
+  letter-spacing: 0.4em;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 0 0 1.4rem;
+  text-align: center;
+}
+
+/* Name section */
+.nameSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0;
+}
+
+.label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.input {
+  width: 100%;
+  padding: 0.72rem 1rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+.input:focus { outline: none; border-color: var(--accent); }
+.input::placeholder { color: var(--text-dim); }
+
+/* Error — always takes up space, invisible when empty */
+.error {
+  font-size: 0.82rem;
+  color: transparent;          /* hidden when no error */
+  min-height: 1.2rem;
+  margin: 0.4rem 0 0.6rem;
+  transition: color 0.15s;
+  line-height: 1.2;
+}
+.errorVisible {
+  color: #f87171;
+}
+
+/* Buttons */
+.btnPrimary {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--accent);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-bottom: 0;
+}
+.btnPrimary:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+.btnPrimary:disabled { opacity: 0.38; cursor: default; }
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0 0.85rem;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.divider span { white-space: nowrap; }
+
+/* Multiplayer row */
+.multiRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.btnOutline {
+  width: 100%;
+  padding: 0.72rem;
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.btnOutline:hover:not(:disabled) {
+  background: rgba(201,168,76,0.1);
+  transform: translateY(-1px);
+}
+.btnOutline:disabled { opacity: 0.38; cursor: default; }
+
+.joinRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.inputCode {
+  flex: 1;
+  min-width: 0;
+  padding: 0.72rem 0.85rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: border-color 0.15s;
+}
+.inputCode:focus { outline: none; border-color: var(--accent); }
+.inputCode::placeholder { color: var(--text-dim); letter-spacing: 0; text-transform: none; font-size: 0.85rem; }
+
+.btnJoin {
+  padding: 0.72rem 1rem;
+  background: var(--accent);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.btnJoin:hover:not(:disabled) { opacity: 0.88; }
+.btnJoin:disabled { opacity: 0.38; cursor: default; }
+
+.rulesLink {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0.5rem 0 0;
+  text-decoration: underline;
+  text-align: center;
+  margin-top: 0.8rem;
+  transition: color 0.15s;
+}
+.rulesLink:hover { color: var(--text); }

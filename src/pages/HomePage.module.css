@@ -1,0 +1,159 @@
+.page { display: flex; flex-direction: column; }
+
+/* ── Hero ── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, #1a2d4a 0%, transparent 70%);
+  position: relative;
+  overflow: hidden;
+}
+
+.suits {
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  color: var(--gold-dim);
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.18em;
+  text-shadow: 0 0 60px rgba(201, 168, 76, 0.4);
+  margin-bottom: 1.25rem;
+}
+
+.subtitle {
+  max-width: 560px;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.heroBtns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+/* ── Card fan decoration ── */
+.cardFan {
+  display: flex;
+  margin-top: 3.5rem;
+  position: relative;
+  height: 120px;
+  width: 240px;
+}
+
+.fanCard {
+  position: absolute;
+  left: calc(50% - 30px);
+  width: 60px;
+  height: 84px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  transform-origin: bottom center;
+  transform: rotate(calc((var(--i) - 2) * 12deg));
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Buttons ── */
+.btnPrimary {
+  padding: 0.75rem 2.2rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: #0a0f1a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: none;
+  border-radius: var(--radius-lg);
+  transition: filter 0.18s, transform 0.18s;
+}
+.btnPrimary:hover { filter: brightness(1.12); transform: translateY(-2px); }
+
+.btnSecondary {
+  padding: 0.75rem 2.2rem;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.18s, color 0.18s, transform 0.18s;
+}
+.btnSecondary:hover { border-color: var(--gold); color: var(--gold-light); transform: translateY(-2px); }
+
+/* ── Features section ── */
+.features {
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--text);
+  margin-bottom: 2.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.featureCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.featureCard:hover { border-color: var(--border-light); transform: translateY(-3px); }
+
+.featureIcon {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+  color: var(--gold);
+}
+
+.featureCard h3 {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.featureCard p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
+
+/* ── Teaser ── */
+.teaser {
+  border-top: 1px solid var(--border);
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, transparent, #0d1828);
+}
+
+.teaserInner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.teaserInner h2 { font-size: 1.7rem; color: var(--text); }
+.teaserInner p { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; }

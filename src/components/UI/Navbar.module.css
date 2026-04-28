@@ -1,0 +1,49 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 60px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.18em;
+  text-decoration: none;
+}
+
+.diamond {
+  font-size: 1.4rem;
+  color: var(--gold);
+}
+
+.links { display: flex; gap: 4px; }
+
+.link {
+  padding: 6px 18px;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 0.18s, background 0.18s;
+}
+
+.link:hover { color: var(--text); background: var(--surface2); }
+
+.active {
+  color: var(--gold-light) !important;
+  background: var(--surface3) !important;
+}
