@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const solo  = axios.create({ baseURL: '/api/game' })
-const lobby = axios.create({ baseURL: '/api/lobby' })
-
+const BASE = import.meta.env.VITE_API_URL || ''
+const solo  = axios.create({ baseURL: `${BASE}/api/game` })
+const lobby = axios.create({ baseURL: `${BASE}/api/lobby` })
 // ── Single-player ────────────────────────────────────────────────────────────
 export const startGame        = (playerName) => solo.post('/start',     null, { params: { playerName } }).then(r => r.data)
 export const getState         = ()           => solo.get('/state').then(r => r.data)
