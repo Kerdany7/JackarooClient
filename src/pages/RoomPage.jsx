@@ -14,6 +14,7 @@ export default function RoomPage() {
   const [lobby, setLobby]   = useState(null)
   const [error, setError]   = useState('')
   const [starting, setStarting] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const session = sessionRef.current
 
@@ -77,6 +78,8 @@ export default function RoomPage() {
 
   const copyCode = () => {
     navigator.clipboard?.writeText(roomCode).catch(() => {})
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
   }
 
   if (!session?.token) return null
@@ -96,7 +99,9 @@ export default function RoomPage() {
           <span className={styles.codeLabel}>Room Code</span>
           <div className={styles.codeRow}>
             <span className={styles.code}>{roomCode}</span>
-            <button className={styles.copyBtn} onClick={copyCode} title="Copy code">⎘</button>
+            <button className={`${styles.copyBtn} ${copied ? styles.copyBtnDone : ''}`} onClick={copyCode} title="Copy code">
+              {copied ? '✓' : '⎘'}
+            </button>
           </div>
           <p className={styles.codeHint}>Share this code with friends to invite them.</p>
         </div>
@@ -135,13 +140,20 @@ export default function RoomPage() {
 
         <div className={styles.actions}>
           {isHost && (
-            <button
-              className={styles.btnStart}
-              onClick={handleStart}
-              disabled={!canStart || starting}
-            >
-              {starting ? 'Starting…' : `Start Game (${filledCount}/4)`}
-            </button>
+            <>
+              <button
+                className={styles.btnStart}
+                onClick={handleStart}
+                disabled={!canStart || starting}
+              >
+                {starting ? 'Starting…' : `Start Game (${filledCount}/4)`}
+              </button>
+              {filledCount < 4 && !starting && (
+                <p className={styles.cpuFillNote}>
+                  {4 - filledCount} empty slot{4 - filledCount !== 1 ? 's' : ''} will be filled by CPU
+                </p>
+              )}
+            </>
           )}
           {!isHost && (
             <p className={styles.waitMsg}>Waiting for the host to start the game…</p>

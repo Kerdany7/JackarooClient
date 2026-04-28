@@ -19,7 +19,7 @@
 .title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--gold);
   margin: 0 0 1.5rem;
   text-align: center;
 }
@@ -53,7 +53,7 @@
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: 0.18em;
-  color: var(--accent);
+  color: var(--gold);
 }
 
 .copyBtn {
@@ -64,10 +64,12 @@
   font-size: 1rem;
   color: var(--text-dim);
   cursor: pointer;
-  transition: color 0.15s;
+  transition: color 0.15s, border-color 0.15s;
+  min-width: 2rem;
 }
 
-.copyBtn:hover { color: var(--accent); }
+.copyBtn:hover { color: var(--gold); border-color: var(--border-light); }
+.copyBtnDone { color: #52d688 !important; border-color: #14532d !important; }
 
 .codeHint {
   font-size: 0.8rem;
@@ -94,8 +96,8 @@
 }
 
 .slotFilled {
-  border-color: var(--sc, var(--accent));
-  background: color-mix(in srgb, var(--sc, var(--accent)) 8%, transparent);
+  border-color: var(--sc, var(--gold));
+  background: color-mix(in srgb, var(--sc, var(--gold)) 8%, transparent);
 }
 
 .slotEmpty {
@@ -132,7 +134,7 @@
 
 .tagHost {
   font-size: 0.7rem;
-  background: var(--accent);
+  background: var(--gold);
   color: #1a1a1a;
   border-radius: 0.25rem;
   padding: 0.1rem 0.4rem;
@@ -177,7 +179,7 @@
 
 .btnStart {
   padding: 0.8rem;
-  background: var(--accent);
+  background: var(--gold);
   color: #1a1a1a;
   border: none;
   border-radius: 0.5rem;
@@ -194,6 +196,13 @@
   text-align: center;
   color: var(--text-dim);
   font-size: 0.9rem;
+  margin: 0;
+}
+
+.cpuFillNote {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-dim);
   margin: 0;
 }
 

@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import * as api from '../api/gameApi'
 import GameBoard from '../components/Board/GameBoard'
 import PlayerHand from '../components/Cards/PlayerHand'
+import { playSound } from '../utils/sounds'
+import { getCardHint } from '../utils/cardHints'
 import styles from './GamePage.module.css'
 
 const PLAYER_COLORS = {
@@ -10,98 +12,6 @@ const PLAYER_COLORS = {
 }
 const COLOUR_NAMES = {
   GREEN: 'Green', RED: 'Red', YELLOW: 'Yellow', BLUE: 'Blue',
-}
-
-// ── Sound engine ─────────────────────────────────────────────────────────────
-let _audioCtx = null
-function getAudioCtx() {
-  if (!_audioCtx || _audioCtx.state === 'closed')
-    _audioCtx = new (window.AudioContext || window.webkitAudioContext)()
-  return _audioCtx
-}
-function playSound(type) {
-  try {
-    const ctx = getAudioCtx()
-    if (ctx.state === 'suspended') ctx.resume()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    const t = ctx.currentTime
-    switch (type) {
-      case 'card':
-        osc.type = 'sine'
-        osc.frequency.setValueAtTime(660, t)
-        gain.gain.setValueAtTime(0.07, t)
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12)
-        osc.start(t); osc.stop(t + 0.12)
-        break
-      case 'move':
-        osc.type = 'triangle'
-        osc.frequency.setValueAtTime(340, t)
-        osc.frequency.exponentialRampToValueAtTime(200, t + 0.18)
-        gain.gain.setValueAtTime(0.1, t)
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.22)
-        osc.start(t); osc.stop(t + 0.22)
-        break
-      case 'trap':
-        osc.type = 'sawtooth'
-        osc.frequency.setValueAtTime(440, t)
-        osc.frequency.exponentialRampToValueAtTime(80, t + 0.5)
-        gain.gain.setValueAtTime(0.1, t)
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5)
-        osc.start(t); osc.stop(t + 0.5)
-        break
-      case 'safe':
-        osc.type = 'sine'
-        osc.frequency.setValueAtTime(780, t)
-        osc.frequency.exponentialRampToValueAtTime(1200, t + 0.25)
-        gain.gain.setValueAtTime(0.09, t)
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35)
-        osc.start(t); osc.stop(t + 0.35)
-        break
-      case 'win':
-        osc.type = 'sine'
-        ;[523, 659, 784, 1047].forEach((f, i) => osc.frequency.setValueAtTime(f, t + i * 0.16))
-        gain.gain.setValueAtTime(0.15, t)
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.9)
-        osc.start(t); osc.stop(t + 0.9)
-        break
-      case 'home':
-        osc.type = 'sine'
-        osc.frequency.setValueAtTime(300, t)
-        osc.frequency.exponentialRampToValueAtTime(180, t + 0.25)
-        gain.gain.setValueAtTime(0.08, t)
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25)
-        osc.start(t); osc.stop(t + 0.25)
-        break
-    }
-  } catch (_) { /* ignore audio errors */ }
-}
-
-// ── Card hint ─────────────────────────────────────────────────────────────────
-function getCardHint(cardName) {
-  if (!cardName) return null
-  const base = cardName.split(' ')[0].toLowerCase()
-  if (base === 'ace' || base === 'king')
-    return { icon: '⚡', text: 'Click Play to field a marble from home, or click a home marble slot, or select a marble on the board to move it.' }
-  if (base === 'ten')
-    return { icon: '🎯', text: 'Click Play to force the next player to discard a card, or click your marble to move 10.' }
-  if (base === 'queen')
-    return { icon: '👑', text: 'Click Play to make a random player discard a card, or click your marble to move 12.' }
-  if (base === 'jack')
-    return { icon: '🔄', text: 'Click your marble + an opponent\'s to swap them, or just yours to move 11.' }
-  if (base === 'seven')
-    return { icon: '✂️', text: 'Click 1 marble to move all 7, or click 2 marbles to split. Adjust split with the slider.' }
-  if (base === 'four')
-    return { icon: '⬅️', text: 'Click your marble — it will move 4 steps backward.' }
-  if (base === 'marbleburner')
-    return { icon: '🔥', text: 'Click an opponent\'s marble on the board to send it back home.' }
-  if (base === 'marblesaver')
-    return { icon: '⭐', text: 'Click your own marble to instantly send it to a safe zone slot.' }
-  if (base === 'five')
-    return { icon: '5️⃣', text: 'Click any marble (yours or an opponent\'s) to move it 5 steps forward.' }
-  return { icon: '▶️', text: 'Click your marble on the board to select it, then click Play.' }
 }
 
 let toastCounter = 0
@@ -373,17 +283,16 @@ export default function GamePage() {
       setHasPlayed(false)
       setSplitDistanceState(3)
 
-      // Step through CPU turns with animated delay
       while (!s.winner && s.currentPlayerName !== humanName.current) {
-        setCpuThinking(s.currentPlayerName)
-        setStatus(`${s.currentPlayerName} is thinking…`)
+        const cpuName = s.currentPlayerName
+        setCpuThinking(cpuName)
+        setStatus(`${cpuName} is thinking…`)
         await new Promise(r => setTimeout(r, 900))
         try {
           s = await api.cpuStep()
           applyState(s)
-          addLog(`${s.currentPlayerName !== humanName.current ? s.currentPlayerName : 'CPU'} took their turn.`, 'cpu')
+          addLog(`${cpuName} took their turn.`, 'cpu')
         } catch {
-          // Recover from network error — get current state without advancing
           try { s = await api.getState(); applyState(s) } catch {}
           break
         }
