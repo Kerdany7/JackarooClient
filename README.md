@@ -1,16 +1,76 @@
-# React + Vite
+# Jackaroo — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> React frontend for Jackaroo, a real-time online multiplayer card board game.
 
-Currently, two official plugins are available:
+**Backend repo:** [JackarooServer](https://github.com/Kerdany7/JackarooServer)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Pages
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Route | Description |
+|---|---|
+| `/` | Home page with game overview and feature highlights |
+| `/rules` | Full card reference and board rules |
+| `/lobby` | Enter your name, create a room or join with a code |
+| `/room/:roomCode` | Waiting room — shows connected players, host can start |
+| `/multiplayer/:roomCode` | Live multiplayer game |
+| `/game` | Solo game vs 3 CPU opponents |
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+
+| | |
+|---|---|
+| Framework | React 19 |
+| Build tool | Vite |
+| Routing | React Router v7 |
+| HTTP | Axios |
+| WebSocket | STOMP over SockJS (`@stomp/stompjs`) |
+| Styling | CSS Modules |
+
+---
+
+## Running Locally
+
+**Prerequisites:** Node.js 18+, the backend running on `http://localhost:8080`
+
+```bash
+git clone https://github.com/Kerdany7/JackarooClient.git
+cd JackarooClient
+npm install
+npm run dev
+```
+
+App runs on `http://localhost:5173`. API calls are proxied to `http://localhost:8080` automatically via Vite config — no CORS issues locally.
+
+---
+
+## Project Structure
+
+```
+src/
+├── api/
+│   └── gameApi.js        # All axios calls (solo + multiplayer)
+├── components/
+│   ├── Board/            # GameBoard component
+│   ├── Cards/            # GameCard, PlayerHand
+│   └── UI/               # Navbar
+├── pages/
+│   ├── HomePage.jsx
+│   ├── RulesPage.jsx
+│   ├── LobbyPage.jsx
+│   ├── RoomPage.jsx      # Waiting room
+│   ├── GamePage.jsx      # Solo game
+│   └── MultiGamePage.jsx # Multiplayer game
+└── utils/
+    ├── cardHints.js      # Card tooltip descriptions
+    └── sounds.js         # Sound effect helpers
+```
+
+---
+
+## Status
+
+> Work in progress — core gameplay is functional, some edge cases are still being worked on.
